@@ -7,7 +7,7 @@ For some reason, after your initial setup and after you attached your OVH instan
 
 For example: `ping google.com` timeouts.
 
-## Solution
+## 1/2: Short solution (to check that this issue is going to help you)
 
 ```bash
 sudo nano /etc/resolv.conf
@@ -34,4 +34,41 @@ Just remove all of this and change it to:
 nameserver 127.0.0.53
 options edns0 trust-ad
 search .
+```
+
+## 2/2: Permanent solution 
+
+First, check you got the issue:
+```
+ls -la /etc
+```
+
+You should see /etc/resolve.conf that links to :
+```
+lrwxrwxrwx  1 root root      32 Oct  4 04:35 resolv.conf -> /run/systemd/resolve/resolv.conf
+```
+which is not correct.
+
+**If have ANY other symlink, don't use the following method. If you have this symlink, you can go further:**
+
+Permanent solution:
+
+a.
+```bash
+sudo nano /run/systemd/resolve/stub-resolv.conf
+```
+```conf
+nameserver 127.0.0.53
+options edns0 trust-ad
+search .
+```
+
+b.
+```bash
+sudo mv /etc/resolv.conf /etc/resolve.conf.backup
+sudo ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+sudo netplan try
+sudo netplan apply
+sudo systemctl restart systemd-resolved
 ```
