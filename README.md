@@ -71,4 +71,7 @@ sudo ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 sudo netplan try
 sudo netplan apply
 sudo systemctl restart systemd-resolved
+
+#... I recommend to reboot your system
+sudo reboot
 ```
