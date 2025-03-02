@@ -43,7 +43,7 @@ First, check you got the issue:
 ls -la /etc
 ```
 
-You should see /etc/resolve.conf that links to :
+You should see /etc/resolv.conf that links to :
 ```
 lrwxrwxrwx  1 root root      32 Oct  4 04:35 resolv.conf -> /run/systemd/resolve/resolv.conf
 ```
